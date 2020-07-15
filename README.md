@@ -1,5 +1,5 @@
 required php, nodejs, npm, composer.
-step : run terminal or set config :
+step :
 1. npm i
 2. composer i
 3. set environment
