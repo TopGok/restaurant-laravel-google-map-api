@@ -92,6 +92,7 @@ export default {
           if (res.data.datas.length && res.data.status !== "INVALID_REQUEST") {
             // let _id = this.id;
             // this.id = res.data.next_page_token ? _id : 1;
+            this.datas = [...this.datas, ...res.data.datas]; //set datas
             this.next_page_token = res.data.next_page_token //set next_page_token if response has
               ? res.data.next_page_token
               : "";
@@ -99,7 +100,6 @@ export default {
               //call for stack datas if response has param next_page_token
               setTimeout(() => this.GetRestaurants(), 1000);
             } else {
-              this.datas = [...this.datas, ...res.data.datas]; //set datas
               this.lat_lng.lat = this.datas[0].location.lat; //set warp map is request is last
               this.lat_lng.lng = this.datas[0].location.lng;
             }

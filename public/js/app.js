@@ -2026,6 +2026,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
           if (res.data.datas.length && res.data.status !== "INVALID_REQUEST") {
             // let _id = this.id;
             // this.id = res.data.next_page_token ? _id : 1;
+            _this2.datas = [].concat(_toConsumableArray(_this2.datas), _toConsumableArray(res.data.datas)); //set datas
+
             _this2.next_page_token = res.data.next_page_token //set next_page_token if response has
             ? res.data.next_page_token : "";
 
@@ -2035,8 +2037,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
                 return _this2.GetRestaurants();
               }, 1000);
             } else {
-              _this2.datas = [].concat(_toConsumableArray(_this2.datas), _toConsumableArray(res.data.datas)); //set datas
-
               _this2.lat_lng.lat = _this2.datas[0].location.lat; //set warp map is request is last
 
               _this2.lat_lng.lng = _this2.datas[0].location.lng;
