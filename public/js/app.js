@@ -1975,15 +1975,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         lat: 13.736717,
         lng: 100.523186
       },
+      // latitude longitude default is thailand
       textSearch: "Bang sue",
+      //text search default
       datas: [],
+      //arrObj show in map
       headerTables: ["No.", "Name", "Address", "lat", "lng"],
       next_page_token: "",
-      id: 1,
+      next_page_token_backup: "",
+      // id: 1,
       window_WH: {
         w: 0,
         h: 0
       },
+      //width height browser
       loading: false
     };
   },
@@ -1993,6 +1998,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   created: function created() {
     var _this = this;
 
+    //set spinner on request api && add event resize browser
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.interceptors.request.use(function (config) {
       _this.loading = true;
       return config;
@@ -2008,55 +2014,50 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     GetRestaurants: function GetRestaurants(search) {
       var _this2 = this;
 
+      //call api laravel for get place datas
       if (search) this.datas = [];
       var url = "api/restaurants";
-      this.textSearch ? url += "?place=" + this.textSearch : null;
-      this.textSearch && this.next_page_token ? url += "&next_page_token=" + this.next_page_token : null;
+      this.next_page_token_backup = this.next_page_token;
+      this.textSearch && (url += "?place=" + this.textSearch);
+      this.textSearch && this.next_page_token && (url += "&next_page_token=" + this.next_page_token);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url).then(function (res, err) {
-        console.log(res.data);
-
         if (!err) {
-          if (res.status === 200) {
-            // console.log(res.data.results);
-            var _id = _this2.id;
-
-            var _datas = res.data.results.map(function (x) {
-              return {
-                id: _id++,
-                address: x.formatted_address,
-                name: x.name,
-                location: {
-                  lat: x.geometry.location.lat,
-                  lng: x.geometry.location.lng
-                }
-              };
-            });
-
-            _this2.datas = [].concat(_toConsumableArray(_this2.datas), _toConsumableArray(_datas));
-            _this2.id = res.data.next_page_token ? _id : 1;
-            _this2.next_page_token = res.data.next_page_token ? res.data.next_page_token : "";
+          // console.log(res.data);
+          if (res.data.datas.length && res.data.status !== "INVALID_REQUEST") {
+            // let _id = this.id;
+            // this.id = res.data.next_page_token ? _id : 1;
+            _this2.next_page_token = res.data.next_page_token //set next_page_token if response has
+            ? res.data.next_page_token : "";
 
             if (res.data.next_page_token) {
+              //call for stack datas if response has param next_page_token
               setTimeout(function () {
                 return _this2.GetRestaurants();
               }, 1000);
             } else {
-              _this2.lat_lng.lat = _this2.datas[0].location.lat;
+              _this2.datas = [].concat(_toConsumableArray(_this2.datas), _toConsumableArray(res.data.datas)); //set datas
+
+              _this2.lat_lng.lat = _this2.datas[0].location.lat; //set warp map is request is last
+
               _this2.lat_lng.lng = _this2.datas[0].location.lng;
             }
           } else {
-            alert(res.statusText);
+            _this2.next_page_token = _this2.next_page_token_backup; //call for stack datas if response fail
+
+            setTimeout(function () {
+              return _this2.GetRestaurants();
+            }, 1000);
           }
-        } else {
-          alert(err);
         }
       });
     },
     onResize: function onResize() {
+      // set size map equal browser
       this.window_WH.w = window.innerWidth + "px";
       this.window_WH.h = window.innerHeight - 62 + "px";
     },
     "goto": function goto(name) {
+      //link new tap to google map and set default search
       window.open("https://www.google.co.th/maps/place/" + name, "_blank");
     }
   }
@@ -3533,8 +3534,8 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-auto" }, [
             _c(
               "form",
               {
@@ -3608,7 +3609,7 @@ var render = function() {
             attrs: {
               position: m.location,
               clickable: true,
-              title: m.address,
+              title: m.formatted_address,
               label: m.name
             },
             on: {
