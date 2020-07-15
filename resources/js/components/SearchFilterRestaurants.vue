@@ -3,8 +3,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-auto">
-          <form v-on:submit.prevent="GetRestaurants(true)">
-            <input type="text" v-model="textSearch" placeholder="Search" />
+          <form v-on:submit.prevent="GetRestaurants(true)" style="padding:5px 0;">
+            <label for="search">Restaurants in</label>
+            <input type="text" id="search" v-model="textSearch" placeholder="Search" />
             <button class="btn btn-primary" type="submit">Search</button>
             <div v-if="loading" class="spinner-border text-danger" role="status" ref="loading">
               <span class="sr-only">Loading...</span>
@@ -13,7 +14,6 @@
           </form>
         </div>
       </div>
-      <br />
     </div>
     <!-- <Table :datas="datas" :headerTables="headerTables" /> -->
     <Map :center="lat_lng" :zoom="14" :style="{width:window_WH.w,height:window_WH.h}">
@@ -113,7 +113,7 @@ export default {
     onResize() {
       // set size map equal browser
       this.window_WH.w = window.innerWidth + "px";
-      this.window_WH.h = window.innerHeight - 62 + "px";
+      this.window_WH.h = window.innerHeight - 48 + "px";
     },
     goto(name) {
       //link new tap to google map and set default search

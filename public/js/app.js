@@ -2054,7 +2054,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     onResize: function onResize() {
       // set size map equal browser
       this.window_WH.w = window.innerWidth + "px";
-      this.window_WH.h = window.innerHeight - 62 + "px";
+      this.window_WH.h = window.innerHeight - 48 + "px";
     },
     "goto": function goto(name) {
       //link new tap to google map and set default search
@@ -3539,6 +3539,7 @@ var render = function() {
             _c(
               "form",
               {
+                staticStyle: { padding: "5px 0" },
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
@@ -3547,6 +3548,10 @@ var render = function() {
                 }
               },
               [
+                _c("label", { attrs: { for: "search" } }, [
+                  _vm._v("Restaurants in")
+                ]),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -3556,7 +3561,7 @@ var render = function() {
                       expression: "textSearch"
                     }
                   ],
-                  attrs: { type: "text", placeholder: "Search" },
+                  attrs: { type: "text", id: "search", placeholder: "Search" },
                   domProps: { value: _vm.textSearch },
                   on: {
                     input: function($event) {
@@ -3592,9 +3597,7 @@ var render = function() {
               ]
             )
           ])
-        ]),
-        _vm._v(" "),
-        _c("br")
+        ])
       ]),
       _vm._v(" "),
       _c(
