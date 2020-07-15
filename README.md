@@ -1,4 +1,4 @@
-required php, nodejs, npm, composer
+required php, nodejs, npm, composer.
 step run terminal or set config :
 1. npm i
 2. composer i
