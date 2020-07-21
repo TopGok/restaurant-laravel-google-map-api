@@ -68,4 +68,9 @@ class SearchFilterRestaurantsController extends Controller
         }
         return response()->json($newRes);
     }
+
+    function getGooglemapKey()
+    {
+        return env("GOOGLEMAP_KEY");
+    }
 }

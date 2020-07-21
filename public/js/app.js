@@ -18362,59 +18362,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_SearchFilterRestaurants_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/SearchFilterRestaurants.vue */ "./resources/js/components/SearchFilterRestaurants.vue");
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
-/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_google_maps__WEBPACK_IMPORTED_MODULE_2__);
-// import Vue from 'vue'
-// import App from './components/SearchFilterRestaurants.vue'
-// import * as VueGoogleMaps from 'vue2-google-maps'
-// Vue.use(VueGoogleMaps, {
-//     load: {
-//         key: 'AIzaSyCb8m6cUu9DkNyWrxZ0UfWpOVRFlT3LnwE',
-//         libraries: 'places', // This is required if you use the Autocomplete plugin
-//         // OR: libraries: 'places,drawing'
-//         // OR: libraries: 'places,drawing,visualization'
-//         // (as you require)
-//         //// If you want to set the version, you can do so:
-//         // v: '3.26',
-//     },
-//     //// If you intend to programmatically custom event listener code
-//     //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
-//     //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
-//     //// you might need to turn this on.
-//     // autobindAllEvents: false,
-//     //// If you want to manually install components, e.g.
-//     //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
-//     //// Vue.component('GmapMarker', GmapMarker)
-//     //// then disable the following:
-//     // installComponents: true,
-// })
-// new Vue({
-//     render: h => h(App),
-//     el: '#app',
-// });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-google-maps */ "./node_modules/vue2-google-maps/dist/main.js");
+/* harmony import */ var vue2_google_maps__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_2__, {
-  installComponents: true,
-  load: {
-    key: 'AIzaSyCb8m6cUu9DkNyWrxZ0UfWpOVRFlT3LnwE',
-    libraries: 'places'
-  }
-}); // json filter is now not bundled with vue
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('json', function (x) {
-  return JSON.stringify(x);
-});
-new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  el: '#app',
-  // components: {
-  //     myApp: App
-  // }
-  render: function render(h) {
-    return h(_components_SearchFilterRestaurants_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
-  }
-});
+
+(function () {
+  return axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('api/googlemap_key').then(function (res) {
+    vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_3__, {
+      installComponents: true,
+      load: {
+        key: res.data,
+        libraries: 'places'
+      }
+    });
+    new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+      el: '#app',
+      render: function render(h) {
+        return h(_components_SearchFilterRestaurants_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+      }
+    });
+  });
+})();
 
 /***/ }),
 

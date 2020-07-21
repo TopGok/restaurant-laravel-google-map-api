@@ -1,57 +1,19 @@
-
-// import Vue from 'vue'
-// import App from './components/SearchFilterRestaurants.vue'
-// import * as VueGoogleMaps from 'vue2-google-maps'
-
-// Vue.use(VueGoogleMaps, {
-//     load: {
-//         key: 'AIzaSyCb8m6cUu9DkNyWrxZ0UfWpOVRFlT3LnwE',
-//         libraries: 'places', // This is required if you use the Autocomplete plugin
-//         // OR: libraries: 'places,drawing'
-//         // OR: libraries: 'places,drawing,visualization'
-//         // (as you require)
-
-//         //// If you want to set the version, you can do so:
-//         // v: '3.26',
-//     },
-
-//     //// If you intend to programmatically custom event listener code
-//     //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
-//     //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
-//     //// you might need to turn this on.
-//     // autobindAllEvents: false,
-
-//     //// If you want to manually install components, e.g.
-//     //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
-//     //// Vue.component('GmapMarker', GmapMarker)
-//     //// then disable the following:
-//     // installComponents: true,
-// })
-
-// new Vue({
-//     render: h => h(App),
-//     el: '#app',
-// });
-
 import Vue from 'vue'
 import App from './components/SearchFilterRestaurants.vue'
+import axios from 'axios'
 import * as VueGoogleMaps from 'vue2-google-maps'
 
-Vue.use(VueGoogleMaps, {
-    installComponents: true,
-    load: {
-        key: 'AIzaSyCb8m6cUu9DkNyWrxZ0UfWpOVRFlT3LnwE',
-        libraries: 'places'
-    }
-})
+(() => axios.get('api/googlemap_key').then(res => {
+    Vue.use(VueGoogleMaps, {
+        installComponents: true,
+        load: {
+            key: res.data,
+            libraries: 'places'
+        }
+    })
 
-// json filter is now not bundled with vue
-Vue.filter('json', x => JSON.stringify(x))
-
-new Vue({
-    el: '#app',
-    // components: {
-    //     myApp: App
-    // }
-    render: h => h(App),
-})
+    new Vue({
+        el: '#app',
+        render: h => h(App),
+    })
+}))()

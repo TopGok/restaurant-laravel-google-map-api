@@ -21,3 +21,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/restaurants', "SearchFilterRestaurantsController@getRestaurants");
+
+Route::get('googlemap_key', "SearchFilterRestaurantsController@getGooglemapKey");
