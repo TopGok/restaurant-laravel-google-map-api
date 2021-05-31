@@ -11,5 +11,5 @@ step : run terminal and set config
 5. php artisan key:generate
 6. php artisan serve
 
-**search support English language such as : 
+**search support only English language such as : 
 Bang sue, Nong khai, Khon kaen, Nakhon ratchasima etc.
